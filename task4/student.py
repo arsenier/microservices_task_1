@@ -4,41 +4,40 @@ class Student:
         self.age = age
         self.group = group
         self.avg_grade = avg_grade
+
+        self.sch_grade_max = 5
+        self.sch_threshold = 4
+        self.sch_low = 4000
+        self.sch_high = 6000
     
-    def getName(self):
+    def get_name(self):
         return self.name
 
-    def getAge(self):
+    def get_age(self):
         return self.age
 
     def __str__(self):
-        return "Name: " + str(self.getName()) +\
-        ", age: " + str(self.getAge()) +\
-        ", scholarship: " + str(self.getScholarship())
-        
-    def getScholarship(self):
-        if self.avg_grade == 5:
-            return 6000
-        elif self.avg_grade > 4:
-            return 4000
+        return "Name: " + str(self.get_name()) +\
+        ", age: " + str(self.get_age()) +\
+        ", scholarship: " + str(self.get_scholarship())
+    
+    def get_scholarship(self):
+        if self.avg_grade == self.sch_grade_max:
+            return self.sch_high
+        elif self.avg_grade > self.sch_threshold:
+            return self.sch_low
         else:
             return 0
         
-    def compareScholarship(self, obj):
-        return self.getScholarship() > obj.getScholarship()
+    def compare_scholarship(self, obj):
+        return self.get_scholarship() > obj.get_scholarship()
     
 class Aspirant(Student):
     def __init__(self, name, age, group, avg_grade, thesis):
         super().__init__(name, age, group, avg_grade)
         self.thesis = thesis
-    
-    def getScholarship(self):
-        if self.avg_grade == 5:
-            return 8000
-        elif self.avg_grade > 4:
-            return 6000
-        else:
-            return 0
+        self.sch_low = 6000
+        self.sch_high = 8000
 
     def __str__(self):
         return super().__str__() + ", thesis: " + str(self.thesis)
@@ -54,7 +53,7 @@ petya = Aspirant("Petya", 213, 270403, 5, "THESIS NAME")
 print(petya)
 petya.avg_grade = 4.5
 
-print(vasya.compareScholarship(petya))
+print(vasya.compare_scholarship(petya))
 
 print(petya)
 petya.avg_grade = 4
